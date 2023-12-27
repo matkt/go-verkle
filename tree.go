@@ -787,19 +787,16 @@ func (n *InternalNode) CommitLog() *Point {
 		fmt.Printf("level %d\n", level)
 		nodes := internalNodeLevels[level]
 		if len(nodes) == 0 {
-			fmt.Println("len(nodes) == 0")
 			continue
 		}
 
 		minBatchSize := 4
 		if len(nodes) <= minBatchSize {
-			fmt.Println("if ----------------------------------")
 			if err := commitNodesAtLevelLog(nodes); err != nil {
 				// TODO: make Commit() return an error
 				panic(err)
 			}
 		} else {
-			fmt.Println("else ----------------------------------")
 			var wg sync.WaitGroup
 			numBatches := runtime.NumCPU()
 			batchSize := (len(nodes) + numBatches - 1) / numBatches
@@ -932,10 +929,6 @@ func commitNodesAtLevelLog(nodes []*InternalNode) error {
 		}
 		node.cow = nil
 		node.commitment.Add(node.commitment, cfg.CommitToPoly(poly, 0))
-	}
-
-	for i := 0; i < len(frs); i += 1 {
-		fmt.Printf("frs[%d] %d\n", i, frs[i])
 	}
 
 	return nil
