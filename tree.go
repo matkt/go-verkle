@@ -822,7 +822,6 @@ func (n *InternalNode) CommitLog() *Point {
 			wg.Wait()
 		}
 
-		fmt.Printf("level %d\n", level)
 		for i := 0; i < len(nodes); i++ {
 			fmt.Printf("node[%d] %x\n", i, nodes[i].commitment.Bytes())
 		}
